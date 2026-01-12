@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-unique-title-to-task-templates
+      author: system
+      preConditions:
+        - tableExists:
+            tableName: task_templates
+      changes:
+        - addUniqueConstraint:
+            tableName: task_templates
+            columnNames: title
+            constraintName: uq_task_templates_title
+
+  - changeSet:
+      id: seed-default-task-templates
+      author: system
+      preConditions:
+        - tableExists:
+            tableName: task_templates
+        - not:
+            - sqlCheck:
+                expectedResult: 4
+                sql: SELECT COUNT(*) FROM task_templates WHERE title IN ('Прочитать статью', 'Посмотреть обучающее видео', 'Изучить новую технологию', 'Сделать обучающий проект')
+      changes:
+        - insert:
+            tableName: task_templates
+            columns:
+              - column:
+                  name: title
+                  value: "Прочитать статью"
+              - column:
+                  name: description
+                  value: "Прочитать одну профильную статью"
+              - column:
+                  name: points
+                  valueNumeric: 5
+              - column:
+                  name: active
+                  valueBoolean: true
+        - insert:
+            tableName: task_templates
+            columns:
+              - column:
+                  name: title
+                  value: "Посмотреть обучающее видео"
+              - column:
+                  name: description
+                  value: "Посмотреть обучающее видео по теме"
+              - column:
+                  name: points
+                  valueNumeric: 10
+              - column:
+                  name: active
+                  valueBoolean: true
+        - insert:
+            tableName: task_templates
+            columns:
+              - column:
+                  name: title
+                  value: "Изучить новую технологию"
+              - column:
+                  name: description
+                  value: "Разобраться с новой технологией/библиотекой"
+              - column:
+                  name: points
+                  valueNumeric: 20
+              - column:
+                  name: active
+                  valueBoolean: true
+        - insert:
+            tableName: task_templates
+            columns:
+              - column:
+                  name: title
+                  value: "Сделать обучающий проект"
+              - column:
+                  name: description
+                  value: "Собрать учебный pet-проект"
+              - column:
+                  name: points
+                  valueNumeric: 30
+              - column:
+                  name: active
+                  valueBoolean: true
