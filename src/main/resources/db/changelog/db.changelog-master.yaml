@@ -1,3 +1,6 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/001-seed-task-templates.yaml
+      file: db/changelog/001-init-tables.yaml
+
+  - include:
+      file: db/changelog/002-seed-task-templates.yaml

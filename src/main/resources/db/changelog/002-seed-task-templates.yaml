@@ -3,8 +3,13 @@ databaseChangeLog:
       id: add-unique-title-to-task-templates
       author: system
       preConditions:
+        - onFail: MARK_RAN
         - tableExists:
             tableName: task_templates
+        - not:
+            uniqueConstraintExists:
+                constraintName: uq_task_templates_title
+                tableName: task_templates
       changes:
         - addUniqueConstraint:
             tableName: task_templates
@@ -15,6 +20,7 @@ databaseChangeLog:
       id: seed-default-task-templates
       author: system
       preConditions:
+        - onFail: MARK_RAN
         - tableExists:
             tableName: task_templates
         - not:
